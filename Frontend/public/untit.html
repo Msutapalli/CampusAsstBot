@@ -1,0 +1,164 @@
+<html><head>
+<title>Registration Form...</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script>
+  var app = angular.module('myApp',[]);
+  app.controller('myCtrl',function($scope,$rootScope,$http){
+  
+  $scope.form = function(){
+  alert();
+  console.log($scope.data);
+	 var res = {
+            method : 'POST',
+            url : 'https://mrclbot.mybluemix.net/data',
+            data : $scope.data,
+             headers: {
+                        'Content-Type': 'Application/json'
+                    }
+        }
+		$http(res).then(function(response){
+		console.log("Your data has been entered into Database")
+		console.log(response);
+		var result = response.data.result;
+		if(result == 'err'){
+		$rootScope.output = "Error Occured! Please try again later";
+		$scope.classType = "alert alert-danger";
+		$scope.data = '';
+		}
+		else if(result == 'error')
+		{
+		$rootScope.output = "You are already registered!";
+		$scope.classType = "alert alert-warning";
+			$scope.data = '';
+		}
+			else{
+			$rootScope.output = "Successfully Registred!";
+			$scope.classType = "alert alert-success";
+			$scope.data = '';
+			}
+		});
+  }
+  })
+  </script>
+	<style>
+	#img {
+    background: url("miracle.jpg") no-repeat center center fixed;
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+	width:100%;
+	display: block;
+	position: fixed;
+	top:0;
+	}
+#img-bg{
+background:rgba(0,0,0,0.8);
+height:100%;
+width:100%;
+top:0;
+	display: block;
+	position: fixed;
+}
+#t1{
+	display: block;
+	position: relative;
+	font-size: 35px;
+	color:#ffffff;
+	width:100%;
+	height:13%;
+}
+	</style>
+	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+<center>
+<div id="img"></div>
+<div id="img-bg"></div>
+<div id="t1" style="top:3%;"><b>Student Courses Registration Form</b></div>
+<div class = "panel panel-default" style="margin-left:25%;margin-right:25%;top:15%;position:absolute ">
+
+<div id="form">
+<form ng-submit="form()">
+<div style="margin-left:10%;margin-right:10%;margin-top:5%; margin-bottom:3%">
+<div class="input-group">
+ <div class="input-group-addon" style="background-color: transparent;">
+   <label>First Name:</label>
+ </div>
+ <input id="name" class="form-control" style="width:93%; margin-right: 10px" ng-model="data.firstname" placeholder="First Name" required type="text">
+ <div class="input-group-addon" style="background-color: transparent;">
+   <label>Last Name:</label>
+ </div>                          
+ <input id="name1" class="form-control" style="width:100%" ng-model="data.lname" placeholder="Last Name" required type="text"></div>
+          <br> 
+
+   <div class = "input-group">
+<div class="input-group-addon" style="background-color: transparent;"><label>Father Name:</label></div>
+   <input id="name" class="form-control" id="fname" ng-model="data.fname" placeholder="Father Name" required type="text"></div><br/>
+   <div class = "input-group">
+   <div class="input-group-addon" style="background-color: transparent;"><label>Mother Name:</label></div>
+   <input id="name" class="form-control" ng-model="data.mname" placeholder="Mother Name" required type="text"></div><br/>
+    <div class="input-group">
+   <div class="input-group-addon" style="background-color: transparent;"><label>Gender:</label></div>
+<select class="form-control" class="form-control" style="width:98%;" ng-model="data.gender" required>
+            <option value="select">Iam ..</option>
+            <option value="m">Male</option>
+            <option value="f">Female</option>
+    	</select>
+    <div class="input-group-addon" style="background-color:transparent;left:20%;"><label>DOB:</label></div>
+    <input id="name" class="form-control" style="width:100%;" ng-model="data.dob" placeholder="DD/MM/YYYY" required type="Date"></div> <br>
+    <div class="input-group">
+   <div class="input-group-addon" style="background-color: transparent;"><label>SSC Marks:</label></div>
+    <input ng-model="data.name" class="form-control" style="width:90%;" name=" SSC marks" placeholder="Marks or GPA" required type="number">  
+     <div class="input-group-addon" style="background-color: transparent"><label>Pass Year:</label></div>
+     <select class="form-control" style="width:100%;margin-right:100px" ng-model="data.sscpassyear" required>
+            <option value="select">Year</option>
+            <option value="cse">2005</option>
+            <option value="ece">2006</option>
+            <option value="eee">2007</option>
+            <option value="mech">2008</option>
+            <option value="civil">2009</option>
+            <option value="cse">2010</option>
+            <option value="ece">2011</option>
+            <option value="eee">2012</option>
+            <option value="mech">2013</option>
+            <option value="civil">2014</option>
+            <option value="civil">2015</option>
+            </select>
+    </div> <br>
+   <div class="input-group">
+   <div class="input-group-addon" style="background-color: transparent;"><label>Intermediate:</label></div>
+    <input id="name" class="form-control" style="width:95%;  margin-right: 10px" ng-model="data.marks" placeholder="Intermediate Marks" required type="number"> 
+    <div class="input-group-addon" style="background-color: transparent;margin-left:10px"><label>EAMCET Rank:</label></div> 
+    <input id="name" class="form-control" style="width:100%;" ng-model="data.rank" placeholder="EAMCET Rank" required type="number"></div> <br>
+<div class="input-group">
+<div class="input-group-addon" style="background-color: transparent;"><label>Course:</label></div>
+       <select class="form-control" style="width:100%; margin-right: 10px" ng-model="data.course" required>
+            <option value="select">--Select the Course--</option>
+            <option value="cse">CSE</option>
+            <option value="ece">ECE</option>
+            <option value="eee">EEE</option>
+            <option value="mech">MECHANICAL</option>
+            <option value="civil">CIVIL</option>
+            </select></div><br>
+   <div class="input-group">
+  <span class="input-group-addon" style="background-color: transparent;"><i class="glyphicon glyphicon-envelope"></i></span>
+ 
+    <input ng-model="data.email" class="form-control"  style="width:90%;   margin-right: 10px" name="email" placeholder="Email id" required type="email"> 
+     <span class="input-group-addon" style="background-color: transparent;"><i class="glyphicon glyphicon-earphone"></i></span>
+    <input ng-model="data.phnumber" class="form-control" style="width:100%" name="phnumber" placeholder="Mobile Number" required type="number"></div><br>
+    <div class="input-group">
+   <div class="input-group-addon" style="background-color: transparent;"><label>Address:</label></div>
+ 
+    <textarea class="form-control" placeholder="Address for communication" rows="3" cols="10" ng-model="data.address"></textarea></div><br>
+	<div class="{{classType}}"><center>{{output}}</center></div>
+        <button type="submit"  style="width:30%;  background-color:#2368a0;color:#fff"class="btn btn-lg btn-block">Register Me!</button>
+		 </div>
+		</form>
+		</div>
+		
+</div></center>
+</body> </html>

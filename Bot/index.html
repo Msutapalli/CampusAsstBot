@@ -1,0 +1,90 @@
+<html>
+<head>
+<title> Miracle Assistance Bot </title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script>
+var app = angular.module('myApp',[]);
+app.controller('myCtrl',function($scope,$http){
+$scope.cls= function(){
+	$scope.data= '';
+		$scope.classType = '';
+}
+    $scope.fwrd = function(){
+	console.log($scope.user)
+        var res = {
+            method : 'POST',
+            url : 'http://miraclebotty.mybluemix.net/message',
+            data : $scope.user,
+             headers: {
+                        'Content-Type': 'Application/json'
+                    }
+        }
+        $http(res).then(function(response){
+		console.log(response);	
+		var data1 = response.data.result;
+		if(data1 == 'msg'){
+		$scope.user.Body = '';
+		$scope.data= "SMS sent to your mobile phone";
+		$scope.classType = "alert alert-success";
+		}
+		else{
+		$scope.user.Body = '';
+		$scope.data= "SMS not sent, please give valid mobile number";
+		$scope.classType = "alert alert-danger";
+		}
+            
+        })
+    }
+})
+</script>
+</head>
+<style>
+#img {
+    background-image: url("miracle.jpg");
+    height: 100%;  
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+	margin-top:0px;
+	position:absolute;
+	width:100%;
+	}
+#img-bg{
+background:rgba(0,0,0,0.8);
+height:100%;
+width:100%; 
+	margin-top:0px;
+	position:absolute;
+}
+	</style>
+<body ng-app="myApp" ng-controller="myCtrl" >
+<div id="img">
+<div id="img-bg">
+<center>
+<h1 style="color:white">Miracle Assistance Bot </h1>
+<div class="panel panel-default" style="width:30%;margin-left:25%;margin-right:25%;margin-top:100px;position:relative">
+<form ng-submit="fwrd()">
+<div style="margin-top: 50px" >
+<div style="margin-left:35px">
+<div style="align:center" class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+<input ng-model="user.From" type="text" style="width: 90%" class="form-control"  name="From" placeholder="Mobile Number">
+ </div>
+<br/><div style="align:center" class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+<input ng-model="user.Body" ng-focus="cls()" type="text" name="Body" style="width: 90%" class="form-control" placeholder="Message">
+</div>
+</div>
+<br/>
+<div class="{{classType}}">{{data}}</div>
+<br/>
+<button class="btn btn-primary" ng-submit="fwrd()" style="width:90%">Send</button>
+</div>
+</form>
+</div>
+</center>
+</div>
+</div>
+</body>
+</html>

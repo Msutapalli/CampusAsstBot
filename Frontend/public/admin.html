@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head><title>Exam Schedule</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script>
+  var app = angular.module('myApp',[]);
+  app.controller('myCtrl',function($scope,$rootScope,$http){
+  $scope.form = function(){
+  console.log($scope.data);
+	 var res = {
+            method : 'POST',
+            url : 'https://mrclbot.mybluemix.net/insert',
+            data : $scope.data,
+             headers: {
+                        'Content-Type': 'Application/json'
+                    }
+        }
+		$http(res).then(function(response){
+		var result = response.data.result;
+		if(result == 'err'){
+		$rootScope.output = "Error Occured!";
+		$scope.classType = "alert alert-danger";
+		}
+		else if(result == 'error')
+		{
+		$rootScope.output = "Schedules already present";
+		$scope.classType = "alert alert-warning";
+			
+		}
+			else{
+			$rootScope.output = "Schedules Inserted!";
+			$scope.classType = "alert alert-success";
+			}
+		});
+  }
+  })
+  </script>
+	
+<style>
+	#img {
+    background: url("miracle.jpg") no-repeat center center fixed;
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+	width:100%;
+	display: block;
+	position: fixed;
+top:0;
+	}
+#img-bg{
+background:rgba(0,0,0,0.7);
+height:100%;
+width:100%;
+top:0;
+	display: block;
+	position: fixed;
+}
+#t1{
+	display: block;
+	position: fixed;
+	font-size: 40px;
+	color:#E6EAF1;
+	width:100%;
+	height:13%;
+}
+	</style>
+	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+<center>
+<div id="img"></div>
+<div id="img-bg"></div>
+
+<div id="t1" style="top:3%;"><b>Exam Schedule</b></div>
+<div class="panel panel-default" style="margin-left:30%;margin-right:25%;position:absolute;margin-top:15%;width:500px;height:100px" ng-show="output">
+<div  style="font-size:20px;height:100%" class="{{classType}}" ng-model="output"><center>{{output}}</center></div>
+</div>
+<div ng-hide="output" class = "panel panel-default" style="margin-left:20%;margin-right:20%;top:20%;position:absolute">
+<form ng-submit="form()">
+<div style="margin-left:5%;margin-right:10%;margin-top:5%; margin-bottom:3%">
+<div class = "input-group">
+<div class="input-group-addon" style="background-color: transparent;"><label>Department</label></div>
+ <select  class="form-control" ng-model="data.Dept" id = "Dept">
+    <option>Select Department</option>
+    <option name = "cse">cse</option>
+    <option name = "ece">ece</option>
+    <option name = "eee">eee</option>
+    <option name = "mech">mech</option>
+    <option name = "civil">civil</option>
+    <option name = "bsh">bsh</option>
+    <option name = "mba">mba</option>
+    <option name = "mca">mca</option>
+    </select></div><br>
+
+<div class = "input-group">
+<div class="input-group-addon" style="background-color: transparent;"><label>Exam Type</label></div> 
+    <select class="form-control" ng-model="data.ExamType" id="ExamType">
+    <option name = "MidTerm1">Select Type of Exam</option>
+    <option name = "MidTerm1">MidTerm1</option>
+    <option name = "LabInternals">LabInternals</option>
+    <option name = "LabExternals">LabExternals</option>
+    <option name = "MidTerm2">MidTerm2</option>
+    <option name = "Final">Final</option>
+    </select></div>
+<br> 
+
+<div class = "input-group">
+<div class="input-group-addon" style="background-color: transparent;"><label>From Date:</label></div>
+<input type="Date"  class="form-control" style="width:90%; margin-right: 10px" placeholder="Starts from" ng-model="data.sdate" id="sdate" required>
+
+<div class="input-group-addon" style="background-color: transparent;"><label>To Date:</label></div>
+ <input type="Date" class="form-control" style="width:100%;" placeholder="ends on" ng-model="data.edate" id="edate" required></div><br>
+ 
+ <div class = "input-group">
+<div class="input-group-addon" style="background-color: transparent;"><label>Subject 1:</label></div>
+<input type="text"  class="form-control" style="width:90%; margin-right: 10px" placeholder="Subject" ng-model="data.sub1" id="sub1" required>
+
+<div class="input-group-addon" style="background-color: transparent;"><label>Date:</label></div>
+ <input type="Date" class="form-control" style="width:100%;" ng-model="data.date1" id="date1" required></div><br>
+
+
+ <div class = "input-group">
+<div class="input-group-addon" style="background-color: transparent;"><label>Subject 2:</label></div>
+<input type="text"  class="form-control" style="width:90%; margin-right: 10px" ng-model="data.sub2" placeholder="Subject" id="sub2" required>
+
+<div class="input-group-addon" style="background-color: transparent;"><label>Date:</label></div>
+ <input type="Date" class="form-control" style="width:100%;" ng-model="data.date2" id="date2" required></div><br>
+ 
+
+ <div class = "input-group">
+<div class="input-group-addon" style="background-color: transparent;"><label>Subject 3:</label></div>
+<input type="text"  class="form-control" style="width:90%; margin-right: 10px" placeholder="Subject" ng-model="data.sub3" id="sub3" required>
+
+<div class="input-group-addon" style="background-color: transparent;"><label>Date:</label></div>
+ <input type="Date" class="form-control" style="width:100%;" ng-model="data.date3" id="date3" required></div><br>
+ 
+ 
+  <center>
+  <div class="{{classType}}" ng-model="output"><center>{{output}}</center></div>
+
+   <button type="submit" class="btn btn-lg" style=" margin-right: 60px; background-color:#2368a0;color:#fff">Submit</button> 
+   <input type="reset" class="btn btn-lg" style=" background-color:#2368a0;color:#fff" value="Reset">
+   </div>
+   </form>
+    </center>
+</center>
+</body>
+
+</html>
